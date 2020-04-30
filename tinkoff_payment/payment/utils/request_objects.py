@@ -1,8 +1,8 @@
 from hashlib import sha256
 
-from .exceptions import InvalidUseException
+from exceptions import InvalidUseException
 from django.conf import settings
-from .constants import PaymentTypes
+from constants import PaymentTypes
 
 
 class PaymentRequest:
@@ -34,8 +34,9 @@ class PaymentRequest:
             notification_url is None else notification_url
         self.SuccessURL = settings.TINKOFF_PAYMENT_SUCCESS_URL if success_url is None else success_url
         self.FailURL = settings.TINKOFF_PAYMENT_FAIL_URL if fail_url is None else fail_url
-        self.TerminalKey = settings.TINKOFF_PAYMENT_TERMINAL_KEY
-        self.OrderId = order_id
+        # self.TerminalKey = settings.TINKOFF_PAYMENT_TERMINAL_KEY
+        self.OrderId = str(order_id)
+        self.TerminalKey = "SomeKey"
         self.DATA = data
         self.PayType = PaymentTypes.SINGLE_STAGE
         self.Token = self.generate_token()
@@ -44,7 +45,8 @@ class PaymentRequest:
         fields = self.__dict__.copy()
         del fields["DATA"]
         del fields["Receipt"]
-        fields["Password"] = settings.TINKOFF_PAYMENT_PASSWORD
+        # fields["Password"] = settings.TINKOFF_PAYMENT_PASSWORD
+        fields["Password"] = "Password"
         values_str = ""
         for key in sorted(fields.keys()):
             values_str += str(fields[key])
@@ -54,7 +56,7 @@ class PaymentRequest:
 
 
 class Item:
-    def __init__(self, name: str, price: str, amount: int, quantity: float,
+    def __init__(self, name: str, price: str, amount: str, quantity: str,
                  tax: str, payment_method=None, payment_object=None):
         """
         Class for item of product that customer want to buy
