@@ -1,6 +1,6 @@
 from json import JSONEncoder
 from json import dumps
-from request_objects import PaymentRequest, Receipt, Item
+from .request_objects import PaymentRequest
 
 
 class ItemEncoder(JSONEncoder):
