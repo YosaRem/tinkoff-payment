@@ -5,7 +5,7 @@ from django.conf import settings
 from .constants import PaymentTypes
 
 
-class PaymentRequest:
+class InitPaymentRequest:
     def __init__(self, order_id: str, amount=None, redirect_due_date=None,
                  customer_ip=None, language=None, description=None,
                  notification_url=None, success_url=None,
@@ -95,3 +95,4 @@ class Receipt:
         self.Items = items
         self.EmailCompany = settings.TINKOFF_PAYMENT_COMPANY_EMAIL if email_company is None else email_company
         self.Taxation = taxation
+

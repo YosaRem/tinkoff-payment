@@ -1,3 +1,25 @@
+TRANSACTION_STATUSES = [
+    ["NEW", "Создан"],
+    ["FORMSHOWED", "Платёжная форма была открыта пользователем"],
+    ["DEADLINE_EXPIRED", "Просрочен"],
+    ["CANCELED", "Отменён"],
+    ["PREAUTHORIZING", "Проверка платёжных данных"],
+    ["AUTHORIZING", "Резервируется"],
+    ["AUTHORIZED", "Зарезервирован"],
+    ["AUTH_FAIL", "Не прошел авторизацию"],
+    ["REJECTED", "Отклонен"],
+    ["3DS_CHECKING", "Проверяется по протоколу 3-D Secure"],
+    ["3DS_CHECKED", "Проверен по протоколу 3-D Secure"],
+    ["REVERSING", "Резервирование отменяется"],
+    ["REVERSED", "Резервирование отменено"],
+    ["CONFIRMING", "Подтверждается"],
+    ["CONFIRMED", "Подтвержден"],
+    ["REFUNDING", "Возвращается"],
+    ["PARTIAL_REFUNDED", "Возвращен частично"],
+    ["REFUNDED", "Возвращен полностью"],
+]
+
+
 class VATRates:
     WITHOUT_VAT = "none"
     VAT_0 = "vat0"
@@ -49,4 +71,10 @@ class PaymentTypes:
 class PaymentSystemLanguage:
     RUSSIAN = "ru"
     ENGLISH = "en"
+
+
+class TinkoffURLs:
+    INIT_URL = "https://securepay.tinkoff.ru/v2/Init"
+
+
 

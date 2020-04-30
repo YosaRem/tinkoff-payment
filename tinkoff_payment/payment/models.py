@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from .utils.constants import TRANSACTION_STATUSES
 
 
 class Balance(models.Model):
@@ -24,9 +25,10 @@ class Transaction(models.Model):
     ]
 
     balance = models.ForeignKey(Balance, related_name="transactions", on_delete=models.CASCADE)
-    amount = models.IntegerField("Количество копеек, на которое изменился баланс")
-    direction = models.IntegerField("Пополнение или снятие", choices=DIRECTIONS)
-    is_confirmed = models.BooleanField("Подтверждёна ли транзакция", default=False)
+    order_id = models.IntegerField
+    amount = models.IntegerField("Количество копеек, на которое изменился баланс", editable=False)
+    direction = models.IntegerField("Пополнение или снятие", choices=DIRECTIONS, editable=False)
+    status = models.CharField("Статус транзакции", choices=TRANSACTION_STATUSES)
 
     def __str__(self):
         return f"{self.balance.user.name}: {str(self.amount * self.direction)}"

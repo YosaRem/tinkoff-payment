@@ -1,6 +1,6 @@
 from json import JSONEncoder
 from json import dumps
-from .request_objects import PaymentRequest
+from .request_objects import InitPaymentRequest
 
 
 class ItemEncoder(JSONEncoder):
@@ -20,7 +20,7 @@ class ReceiptEncoder(JSONEncoder):
 
 
 class RequestEncoder:
-    def __init__(self, payment_request: PaymentRequest):
+    def __init__(self, payment_request: InitPaymentRequest):
         self.request = payment_request
 
     def to_json(self):
