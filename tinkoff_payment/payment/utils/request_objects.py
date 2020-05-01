@@ -1,6 +1,7 @@
 from hashlib import sha256
 
 from .exceptions import InvalidUseException
+from .token_handler import generate_token
 from django.conf import settings
 from .constants import PaymentTypes
 
@@ -45,12 +46,7 @@ class InitPaymentRequest:
         del fields["DATA"]
         del fields["Receipt"]
         fields["Password"] = settings.TINKOFF_PAYMENT_PASSWORD
-        values_str = ""
-        for key in sorted(fields.keys()):
-            values_str += str(fields[key])
-        payment_hash = sha256()
-        payment_hash.update(values_str.encode("utf-8"))
-        return payment_hash.hexdigest()
+        return generate_token(fields)
 
 
 class Item:
