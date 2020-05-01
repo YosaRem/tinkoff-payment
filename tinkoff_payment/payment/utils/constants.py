@@ -20,7 +20,7 @@ TRANSACTION_STATUSES_CHOICES = [
 ]
 
 
-class TransactionStatues:
+class TransactionStatuses:
     NEW = "NEW"
     FORMSHOWED = "FORMSHOWED"
     DEADLINE_EXPIRED = "DEADLINE_EXPIRED"
