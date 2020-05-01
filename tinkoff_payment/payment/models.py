@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .utils.constants import TRANSACTION_STATUSES_CHOICES, TransactionStatues
+from .utils.constants import TRANSACTION_STATUSES_CHOICES, TransactionStatuses
 
 
 class Balance(models.Model):
@@ -11,7 +11,7 @@ class Balance(models.Model):
     def get_balance(self):
         balance = 0
         for transaction in self.transactions:
-            if transaction == TransactionStatues.CONFIRMED:
+            if transaction == TransactionStatuses.CONFIRMED:
                 balance += transaction.amount * transaction.direction
         return balance / 100
 

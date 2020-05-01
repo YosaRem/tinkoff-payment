@@ -14,3 +14,10 @@ class InitPaymentResponse:
         else:
             self.message = data.get("Message")
             self.details = data.get("Details")
+
+
+class InitError:
+    def __init__(self, code, message, details):
+        self.code = code
+        self.message = message
+        self.details = details
