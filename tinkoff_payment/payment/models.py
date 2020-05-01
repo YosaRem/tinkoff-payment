@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .utils.constants import TRANSACTION_STATUSES
+from .utils.constants import TRANSACTION_STATUSES_CHOICES, TransactionStatues
 
 
 class Balance(models.Model):
@@ -11,8 +11,9 @@ class Balance(models.Model):
     def get_balance(self):
         balance = 0
         for transaction in self.transactions:
-            balance += transaction.amount * transaction.direction
-        return balance / 10
+            if transaction == TransactionStatues.CONFIRMED:
+                balance += transaction.amount * transaction.direction
+        return balance / 100
 
     def __str__(self):
         return f"{self.user.name} - {str(self.get_balance())}"
@@ -25,10 +26,10 @@ class Transaction(models.Model):
     ]
 
     balance = models.ForeignKey(Balance, related_name="transactions", on_delete=models.CASCADE)
-    order_id = models.IntegerField
+    order_id = models.AutoField(primary_key=True)
     amount = models.IntegerField("Количество копеек, на которое изменился баланс", editable=False)
     direction = models.IntegerField("Пополнение или снятие", choices=DIRECTIONS, editable=False)
-    status = models.CharField("Статус транзакции", choices=TRANSACTION_STATUSES)
+    status = models.CharField("Статус транзакции", choices=TRANSACTION_STATUSES_CHOICES)
 
     def __str__(self):
         return f"{self.balance.user.name}: {str(self.amount * self.direction)}"
